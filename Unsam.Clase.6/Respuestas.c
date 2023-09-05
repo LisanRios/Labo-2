@@ -18,7 +18,7 @@ elemento en el vector. Utiliza el ciclo while para esta función.
 m. Invertir los elementos del vector sin utilizar otro vector. Por ejemplo, el vector formado por los enteros: 1 2 3,
 debe quedar 3 2 1.
 */
-
+/*
 #include<stdio.h>
 
 void carga_vector(int v[], int d){
@@ -215,7 +215,7 @@ int main(){
     }
 return 0;
 }
-
+*/
 /*-------------------------------------------------------------------------------------------------------------------------------*/
 /*
     2)
@@ -267,10 +267,359 @@ int main() {
 /*-------------------------------------------------------------------------------------------------------------------------------*/
 /*
     3)
+    Completa e implementa el siguiente programa. Después de cada asignación emite dirección y contenido. Comenta
+el código:
+        int v[5];
+        int *p;
+        ...
+        p = &v[0];
+        *p = 1;
+        *(p+1) = 2;
+        *(p+2) = 3; 
 */
+/*
+#include <stdio.h>
+#include <stdlib.h>
 
+int main() {
+    int v[5];
+    int *p;
+    p = &v[0];
+    *p = 1;
+    *(p+1) = 2;
+    *(p+2) = 3;
+    for (int i = 0; i < 5; i++)
+    {
+        printf("v[%d] = %d\n", i, p[i]);
+    } 
+    return 0;
+}
+*/
 /*-------------------------------------------------------------------------------------------------------------------------------*/
+/*
+    4) Escribe un programa que imprima los elementos de un vector de enteros en orden inverso utilizando punteros (sin
+utilizar subíndices [ ] ). Pista: obtener la dirección del último elemento y recorrer en orden inverso.
+int v[10] = {1,2,3,4,5,6,7,8,9,10};
+int *p;
+    
+*/
+/*
+#include <stdio.h>
+#include <stdlib.h>
 
+int main() {
+    int v[10] = {1,2,3,4,5,6,7,8,9,10};
+    int *p;
+    p = &v[0];
+    for (int i = 9; i >= 0; i--)
+    {
+        printf("v[%d] = %d\n", i, *(p+i));
+    }
+    return 0;
+}
+*/
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+/*
+    5) Escribe una función que reciba un vector de enteros y su tamaño, y retorne la cantidad de números impares que
+contiene. Trabaja con notación de punteros y utiliza ciclo while.
+//cabecera de función:
+int impares (int * v, int tam);
+    
+*/
+/*
+#include <stdio.h>
+#include <stdlib.h>
+
+void carga_vector(int v[], int d){
+    int i;
+    for(i = 0; i < d ; i++){
+        printf("Ingrese v[%d]\n", i) ;
+        scanf("%d", &v[i]);
+    }
+}
+
+void emite_vector(int v[], int d){
+    int i;
+    for(i = 0; i < d ; i++)
+        printf("v[%d]=%d\n", i, v[i]);
+}
+
+void pos_inpar(int v[], int d){
+    int i=0;
+    printf("Inpares: ");
+    while(i < d){
+        if ((v[i] % 2) != 0){
+            printf("v[%d]=%d\n", i, v[i]);
+        }
+        i++;  
+    }
+}
+
+int main() {
+    int dim;
+    printf("Ingrese la dimensión del vector: ");
+    scanf("%d", &dim);
+    int v[dim];
+    carga_vector(v, dim);
+    emite_vector(v, dim);
+    pos_inpar(v, dim);
+    return 0;
+}
+*/
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+/*
+    6)  Escribe una función que retorne un puntero al máximo valor de un vector de “doubles”. Si el vector está vacío debe
+retornar NULL.
+//cabecera de función:
+double * max (double * v, int tam);
+    
+*/
+/*
+#include <stdio.h>
+#include <stdlib.h>
+
+void carga_vector(double v[], int tam) {
+    int i;
+    for (i = 0; i < tam; i++) {
+        printf("Ingrese v[%d]: ", i);
+        scanf("%lf", &v[i]);
+    }
+}
+
+void emite_vector(double v[], int tam) {
+    int i;
+    for (i = 0; i < tam; i++)
+        printf("v[%d] = %lf\n", i, v[i]);
+}
+
+double *max(double *v, int tam) {
+    if (tam <= 0) {
+        return NULL;
+    }
+    double *p = v;
+    int i;
+    for (i = 1; i < tam; i++) {
+        if (v[i] > *p) {
+            p = &v[i];
+        }
+    }
+
+    return p; 
+}
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int dim;
+    printf("Ingrese la dimensión del vector: ");
+    scanf("%d", &dim);
+    double v[dim];
+    carga_vector(v, dim);
+    emite_vector(v, dim);
+    double *p = max(v, dim);
+    if (p != NULL) {
+        printf("El máximo valor es: %lf\n", *p);
+    } else {
+        printf("El vector está vacío.\n");
+    }
+
+    return 0;
+}
+*/
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+/*
+    7) Dadas las siguientes declaraciones:
+int v[3] = {10,20,30};
+int *p;
+p = v;
+Explica que imprimiría el printf en cada caso de los siguientes:
+a) (*p)++; printf (“%d”, *p); // printea 11
+b) *(p++); printf (“%d”, *p); // printea 20
+c) *p++; printf (“%d”, *p); // printea 30
+*/
+/*
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int v[3] = {10,20,30};
+    int *p;
+    p = v;
+    (*p)++;
+    printf("%d\n", *p);
+    *(p++);
+    printf("%d\n", *p);
+    *p++;
+    printf("%d\n", *p);
+
+    return 0;
+}
+*/
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+/*
+    8) Qué emite el siguiente programa?
+    #include <stdio.h>
+int main(){
+int x[3], *puntero;
+x[0]=10;
+x[1]=20;
+x[2]=30;
+puntero = x;
+printf("%p\n",puntero);
+puntero = &x[0];
+printf("%p\n",puntero);
+printf("%d\n\n",puntero[0]);
+printf("%d\n\n",*puntero);
+printf("%X\n\n",&puntero);
+printf("%X\n\n",&puntero[1]);
+printf("%d\n\n",puntero[1]);
+printf("%d\n",*(puntero+1));
+printf("%d\n",*(puntero+2));
+return 0;
+}
+
+    
+*/
+/*
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    return 0;
+}
+*/
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+/*
+    )
+    
+*/
+/*
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    return 0;
+}
+*/
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+/*
+    )
+    
+*/
+/*
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    return 0;
+}
+*/
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+/*
+    )
+    
+*/
+/*
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    return 0;
+}
+*/
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+/*
+    )
+    
+*/
+/*
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    return 0;
+}
+*/
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+/*
+    )
+    
+*/
+/*
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    return 0;
+}
+*/
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+/*
+    )
+    
+*/
+/*
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    return 0;
+}
+*/
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+/*
+    )
+    
+*/
+/*
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    return 0;
+}
+*/
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+/*
+    )
+    
+*/
+/*
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    return 0;
+}
+*/
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+/*
+    )
+    
+*/
+/*
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    return 0;
+}
+*/
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+/*
+    )
+    
+*/
+/*
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    return 0;
+}
+*/
+/*-------------------------------------------------------------------------------------------------------------------------------*/
 
 
 
