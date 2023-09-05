@@ -139,7 +139,7 @@ int buscar_apa(int v[], int d, int a){
 int invertir_vector(int v[], int d){
     int i = 1;
     while(i != d+1 && i >= 0){
-        printf("v[%d]=%d\n", (d-i), v[d-i]);
+        printf("v[%d]=%d\n", (i-1), v[d-i]);
         i++;
     }
 }
