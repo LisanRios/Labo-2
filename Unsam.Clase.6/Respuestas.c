@@ -477,8 +477,222 @@ printf("%d\n\n",puntero[1]);
 printf("%d\n",*(puntero+1));
 printf("%d\n",*(puntero+2));
 return 0;
+} 
+
+//000000c92b5ffbb4
+//10
+//
+//10
+//
+//2B5FFBA8
+//
+//2B5FFBB8
+//
+//20
+//
+//20
+//30
+*/
+/*
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(){
+    int x[3], *puntero;
+    x[0]=10;
+    x[1]=20;
+    x[2]=30;
+    puntero = x;
+    printf("%p\n",puntero);
+    puntero = &x[0];
+    printf("%p\n",puntero);
+    printf("%d\n\n",puntero[0]);
+    printf("%d\n\n",*puntero);
+    printf("%X\n\n",&puntero);
+    printf("%X\n\n",&puntero[1]);
+    printf("%d\n\n",puntero[1]);
+    printf("%d\n",*(puntero+1));
+    printf("%d\n",*(puntero+2));
+    return 0;
+}
+*/
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+/*
+    9) Construye una función tal que dados dos vectores de 5 elementos cada uno, los concatene en un tercer un vector
+de 10 elementos.
+Ej: V1 = 2-56-7-8-30;
+ V2 = 7-80-2-4-13;
+ V3 = 2-56-7-8-30-7-80-2-4-13;
+    
+*/
+/*
+#include <stdio.h>
+#include <stdlib.h>
+
+void carga_vector(int v[], int tam) {
+    int i;
+    for (i = 0; i < tam; i++) {
+        printf("Ingrese v[%d]: ", i);
+        scanf("%d", &v[i]);
+    }
 }
 
+void emite_vector(int v[], int tam) {
+    int i;
+    for (i = 0; i < tam; i++)
+        printf("v[%d] = %d\n", i, v[i]);
+}
+
+
+int main() {
+    int v1[5];
+    int v2[5];
+    int v3[10];
+    int i= 0;
+
+    carga_vector(v1, 5);
+    emite_vector(v1, 5);
+    carga_vector(v2, 5);
+    emite_vector(v2, 5);
+
+    while(i < 5) {
+        v3[i] = v1[i];
+    }
+    
+    while(i < 10) {
+        v3[i] = v2[i - 5];
+    }
+
+    emite_vector(v3, 10);
+    return 0;
+}
+*/
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+/*
+    10) Ídem anterior, pero los elementos de los dos vectores deben emitirse intercalados. Ej:
+Ej: V4 = 2-7-56-80-7-2-8-4-30-13;
+    
+*/
+/*
+#include <stdio.h>
+#include <stdlib.h>
+
+void carga_vector(int v[], int tam) {
+    int i;
+    for (i = 0; i < tam; i++) {
+        printf("Ingrese v[%d]: ", i);
+        scanf("%d", &v[i]);
+    }
+}
+
+void emite_vector(int v[], int tam) {
+    int i;
+    for (i = 0; i < tam; i++)
+        printf("v[%d] = %d\n", i, v[i]);
+}
+
+int main() {
+    int v1[5];
+    int v2[5];
+    int v3[10];
+    int i = 0;
+    int j = 0;
+
+    carga_vector(v1, 5);
+    emite_vector(v1, 5);
+    carga_vector(v2, 5);
+    emite_vector(v2, 5);
+printf("*******************\n");
+    for(i = 0; i < 10; i += 2) {
+        v3[i] = v1[i / 2];
+        v3[i + 1] = v2[j];
+        j++;
+    }
+
+    emite_vector(v3, 10);
+
+    return 0;
+}
+*/
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+/*
+    11)Se ingresan los N y M elementos de los arreglos unidimensionales A y B, respectivamente. La computadora emite la
+unión de ambos, su diferencia y su intersección.
+    
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+
+void carga_vector(int v[], int tam) {
+    int i;
+    for (i = 0; i < tam; i++) {
+        printf("Ingrese v[%d]: ", i);
+        scanf("%d", &v[i]);
+    }
+}
+
+void emite_vector(int v[], int tam) {
+    int i;
+    for (i = 0; i < tam; i++)
+        printf("v[%d] = %d\n", i, v[i]);
+}
+
+void diferencia_vectores(int v1[], int v2[], int v3[], int tam) {
+    int i = 0;
+    while (i < tam)
+    {
+        if (v1[i] != v2[i]){
+            v3[i] = v1[i];
+        } else {
+            v3[i] = 0;
+        } 
+        i++;
+    }
+}
+
+void interseccion_vectores(int v1[], int v2[], int v3[], int tam) {
+    int i = 0;
+    while (i < tam)
+    {
+        if (v1[i] == v2[i]){
+            v3[i] = v1[i];
+        } else {
+            v3[i] = 0;
+        }
+        i++;
+    }
+}
+
+int main() {
+    int v1[5], v2[5], v3[10];
+    carga_vector(v1, 5);
+    carga_vector(v2, 5);
+    emite_vector(v1, 5);
+    emite_vector(v2, 5);   
+    printf("*******************\n"); 
+    printf("Unión\n");
+    for (int i = 0; i < 5; i++) {
+        v3[i] = v1[i];
+    }
+    
+    for (int i = 0; i < 5; i++) {
+        v3[i + 5] = v2[i];
+    }
+
+    emite_vector(v3, 10);
+    printf("Diferencia\n");
+    diferencia_vectores(v1, v2, v3, 10);
+    emite_vector(v3, 10);
+    printf("Intersección\n");
+    interseccion_vectores(v1, v2, v3, 10);
+    emite_vector(v3, 10);
+    return 0;
+}
+
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+/*
+    12)
     
 */
 /*
@@ -491,7 +705,7 @@ int main() {
 */
 /*-------------------------------------------------------------------------------------------------------------------------------*/
 /*
-    )
+    13)
     
 */
 /*
@@ -504,7 +718,7 @@ int main() {
 */
 /*-------------------------------------------------------------------------------------------------------------------------------*/
 /*
-    )
+    14)
     
 */
 /*
@@ -517,7 +731,7 @@ int main() {
 */
 /*-------------------------------------------------------------------------------------------------------------------------------*/
 /*
-    )
+    15)
     
 */
 /*
@@ -530,7 +744,7 @@ int main() {
 */
 /*-------------------------------------------------------------------------------------------------------------------------------*/
 /*
-    )
+    16)
     
 */
 /*
@@ -543,7 +757,7 @@ int main() {
 */
 /*-------------------------------------------------------------------------------------------------------------------------------*/
 /*
-    )
+    17)
     
 */
 /*
@@ -556,59 +770,7 @@ int main() {
 */
 /*-------------------------------------------------------------------------------------------------------------------------------*/
 /*
-    )
-    
-*/
-/*
-#include <stdio.h>
-#include <stdlib.h>
-
-int main() {
-    return 0;
-}
-*/
-/*-------------------------------------------------------------------------------------------------------------------------------*/
-/*
-    )
-    
-*/
-/*
-#include <stdio.h>
-#include <stdlib.h>
-
-int main() {
-    return 0;
-}
-*/
-/*-------------------------------------------------------------------------------------------------------------------------------*/
-/*
-    )
-    
-*/
-/*
-#include <stdio.h>
-#include <stdlib.h>
-
-int main() {
-    return 0;
-}
-*/
-/*-------------------------------------------------------------------------------------------------------------------------------*/
-/*
-    )
-    
-*/
-/*
-#include <stdio.h>
-#include <stdlib.h>
-
-int main() {
-    return 0;
-}
-*/
-/*-------------------------------------------------------------------------------------------------------------------------------*/
-/*
-    )
+    18)
     
 */
 /*
