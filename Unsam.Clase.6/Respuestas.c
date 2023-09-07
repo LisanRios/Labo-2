@@ -620,7 +620,7 @@ printf("*******************\n");
 unión de ambos, su diferencia y su intersección.
     
 */
-
+/*
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -689,10 +689,308 @@ int main() {
     emite_vector(v3, 10);
     return 0;
 }
-
+*/
 /*-------------------------------------------------------------------------------------------------------------------------------*/
 /*
-    12)
+    12)Para probar un congelador, la fábrica registra en un listado, la temperatura en el interior durante todos los días del
+mes de junio. Escribe una función que reciba un vector con todas estas temperaturas (generalmente, negativas) y
+devuelva la mínima temperatura. Luego escribe una segunda función que diga en qué día del mes se produjo la
+temperatura mínima. 
+    
+*/
+/*
+#include <stdio.h>
+#include <stdlib.h>
+
+void carga_vector(int v[], int tam) {
+    int i;
+    for (i = 0; i < tam; i++) {
+        printf("Ingrese v[%d]: ", i);
+        scanf("%d", &v[i]);
+    }
+}
+
+void emite_vector(int v[], int tam) {
+    int i;
+    for (i = 0; i < tam; i++)
+        printf("v[%d] = %d\n", i, v[i]);
+}
+
+int *min(int *v, int tam) {
+    if (tam <= 0) {
+        return NULL;
+    }
+    int *p = v;
+    int i;
+    for (i = 1; i < tam; i++) {
+        if (v[i] < *p) {
+            p = &v[i];
+        }
+    }
+    return p;
+}
+
+int main() {
+    int v1[5];
+    printf("ingrese la temperatura: ");
+    carga_vector(v1, 5);
+    printf("las temperaturas son: ");
+    emite_vector(v1, 5);
+    printf("minima temperatura: %d\n", *min(v1, 5));
+    return 0;
+}
+*/
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+/*
+    13) Aritmética de punteros. Investiga el siguiente programa y comenta que emite la última instrucción:
+        int B[] = {3,4,1,2,7,12,-4};
+        float f = 4.234, *ptf;
+        *(B+3) = *B + 15;
+        ptf = &f;
+        *B = (int)(*ptf);
+        f = *ptf + 20;
+        *(B + 5) = (int)(*ptf); // que emite por pantalla B[], f, ptf?
+    ********
+        //B[0] = 4
+        //B[1] = 4
+        //B[2] = 1
+        //B[3] = 18
+        //B[4] = 7
+        //B[5] = 24
+        //B[6] = -4
+*/
+/*
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+        int i = 0;
+        int B[] = {3,4,1,2,7,12,-4};
+        float f = 4.234, *ptf;
+        *(B+3) = *B + 15;
+        ptf = &f;
+        *B = (int)(*ptf);
+        f = *ptf + 20;
+        *(B + 5) = (int)(*ptf);
+        while (i<7)
+        {
+            printf("B[%d] = %d\n", i, B[i]);
+            i++;
+        }
+        
+    return 0;
+}
+*/
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+/*
+    14)14. Qué emite el siguiente programa:
+#include <stdio.h>
+#define SIZE 5
+void mystery (int *, int *);
+main () {
+inti;
+int x[SIZE] = {2,4,6,8,10};
+int y[SIZE] = {1,3,5,7,9};
+int *xPtr = NULL;
+int *yPtr = NULL;
+mystery (x, y);
+for (i=0; i<SIZE; i++) { printf ("%d\t", x[i]); }
+printf ("\n");
+for (i=0; i<SIZE; i++) { printf ("%d\t", y[i]); }
+printf ("\n");
+return 0;
+}
+void mystery (int *n1, int *n2)
+{
+inti;
+for (i=0; i<SIZE; i++) *(n1+i) = 2 * *(n2+i);
+}
+    **********
+    //2       6       10      14      18
+    //1       3       5       7       9
+
+*/
+/*
+#include <stdio.h>
+#include <stdlib.h>
+#define SIZE 5
+
+void mystery (int *, int *);
+main () {
+    int i;
+    int x[SIZE] = {2,4,6,8,10};
+    int y[SIZE] = {1,3,5,7,9};
+    int *xPtr = NULL;
+    int *yPtr = NULL;
+    mystery (x, y);
+    for (i=0; i<SIZE; i++) { printf ("%d\t", x[i]); }
+    printf ("\n");
+    for (i=0; i<SIZE; i++) { printf ("%d\t", y[i]); }
+    printf ("\n");
+    return 0;   
+}
+void mystery (int *n1, int *n2)
+{
+    int i;
+    for (i=0; i<SIZE; i++) *(n1+i) = 2 * *(n2+i);
+}
+*/
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+/*
+    15) Construye un programa que a partir de dos vectores de enteros con sus valores ordenados crecientemente, cree un
+tercer vector, también con los datos ordenados en forma creciente. Los dos vectores que se pretenden fusionar no
+tendrán elementos repetidos en sí mismos, pero entre ellos pueden tener elementos comunes. En este caso, no
+debe haber repeticiones en el vector que resulte de su fusión.
+*/
+/*
+#include <stdio.h>
+#include <stdlib.h>
+
+void carga_vector(int v[], int tam) {
+    int i;
+    for (i = 0; i < tam; i++) {
+        printf("Ingrese v[%d]: ", i);
+        scanf("%d", &v[i]);
+    }
+}
+
+void emite_vector(int v[], int tam) {
+    int i;
+    for (i = 0; i < tam; i++)
+        printf("v[%d] = %d\n", i, v[i]);
+}
+
+void combinar_vectores(int v1[], int v2[], int v3[], int tam1, int tam2) {
+    int i = 0, j = 0, k = 0;
+
+    while (i < tam1 && j < tam2) {
+        if (v1[i] < v2[j]) {
+            v3[k++] = v1[i++];
+        } else if (v2[j] < v1[i]) {
+            v3[k++] = v2[j++];
+        } else {  // Si los elementos son iguales, solo añadir uno de ellos
+            v3[k++] = v1[i++];
+            j++;
+        }
+    }
+
+    // Copiar los elementos restantes de v1 (si los hay)
+    while (i < tam1) {
+        v3[k++] = v1[i++];
+    }
+
+    // Copiar los elementos restantes de v2 (si los hay)
+    while (j < tam2) {
+        v3[k++] = v2[j++];
+    }
+}
+
+int main() {
+    int tam1, tam2;
+
+    printf("Ingrese la dimensión del primer vector: ");
+    scanf("%d", &tam1);
+
+    printf("Ingrese la dimensión del segundo vector: ");
+    scanf("%d", &tam2);
+
+    int v1[tam1];
+    int v2[tam2];
+    int v3[tam1 + tam2]; 
+
+    printf("Ingrese valores para el primer vector:\n");
+    carga_vector(v1, tam1);
+
+    printf("Ingrese valores para el segundo vector:\n");
+    carga_vector(v2, tam2);
+
+    printf("Primer vector ingresado: \n");
+    emite_vector(v1, tam1);
+
+    printf("Segundo vector ingresado: \n");
+    emite_vector(v2, tam2);
+
+    combinar_vectores(v1, v2, v3, tam1, tam2);
+
+    // Ordenar el tercer vector de menor a mayor
+    int temp;
+    for (int i = 0; i < tam1 + tam2 - 1; i++) {
+        for (int j = 0; j < tam1 + tam2 - i - 1; j++) {
+            if (v3[j] > v3[j + 1]) {
+                // Intercambiar elementos si están en el orden incorrecto
+                temp = v3[j];
+                v3[j] = v3[j + 1];
+                v3[j + 1] = temp;
+            }
+        }
+    }
+
+    printf("Tercer vector fusionado y ordenado de menor a mayor: \n");
+    emite_vector(v3, tam1 + tam2);
+
+    return 0;
+}
+*/
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+/*
+    16)Se dispone de un vector de números enteros de tamaño N, ordenados en forma creciente. Se desea conocer si un
+número dado introducido desde el teclado se encuentra en la lista. En caso afirmativo, averiguar su posición y
+emitirla por pantalla. En caso negativo se desea insertarlo en la posición adecuada y posteriormente mostrar la
+posición por pantalla. Utilizar funciones y un menú.
+*/
+/*
+#include <stdio.h>
+#include <stdlib.h>
+
+void carga_vector(int v[], int tam) {
+    int i;
+    for (i = 0; i < tam; i++) {
+        printf("Ingrese v[%d]: ", i);
+        scanf("%d", &v[i]);
+    }
+}
+
+void emite_vector(int v[], int tam) {
+    int i;
+    for (i = 0; i < tam; i++)
+        printf("v[%d] = %d\n", i, v[i]);
+}
+
+void buscar_vector(int v[], int tam, int num) {
+    int i = 0;
+    while(i < tam) {
+        if (v[i] == num) {
+            printf("El número %d se encuentra en la posición %d\n", num, i);
+        } 
+        i++;   
+    }
+    printf("El número %d no se encuentra en el vector\n", num);
+    printf("Se insertará en la posición %d\n", i);
+    v[i] = num;
+}
+
+int main() {
+    int n, num;
+    printf("Ingrese el tamaño del vector: ");
+    scanf("%d", &n);
+    int array[n];
+    printf("Ingrese los valores del vector: ");
+    carga_vector(array, n);
+    printf("El vector ingresado es: ");
+    emite_vector(array, n);
+    printf("Ingrese el número a buscar: ");
+    scanf("%d", &num);
+    buscar_vector(array, n, num);
+    emite_vector(array, n+1);
+    return 0;
+}
+*/
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+/*
+    17)Escribe un programa en el que se defina un vector de 10 punteros a float, se lean diez números en las ubicaciones
+en las que hacen referencia cada uno de los punteros del vector de punteros. Cuando este completo, se sumen
+todos los números y se almacene el resultado en una dirección a la que haga referencia un puntero ajeno al vector.
+El programa deberá mostrar el contenido de todas las variables, tanto los punteros como los datos de tipo float.
     
 */
 /*
@@ -700,12 +998,46 @@ int main() {
 #include <stdlib.h>
 
 int main() {
+    float *punteros[10]; 
+    float suma = 0; 
+    float *resultado; 
+
+    for (int i = 0; i < 10; i++) {
+        punteros[i] = (float *)malloc(sizeof(float));
+        printf("Ingrese un número para la posición %d: ", i );
+        scanf("%f", punteros[i]);
+        suma += *punteros[i];
+    }
+
+    // Asignar la dirección de resultado al puntero ajeno al vector
+    resultado = &suma;
+
+    for (int i = 0; i < 10; i++) {
+        printf("punteros[%d] = %f\n", i, *punteros[i]);
+    }
+    printf("La suma de los números es: %f\n", *resultado);
     return 0;
 }
 */
+
 /*-------------------------------------------------------------------------------------------------------------------------------*/
 /*
-    13)
+    18) Considerando las siguientes declaraciones y sentencias:
+int array[] = {1,2,3,4,5,6};
+int *puntero, x;
+puntero = array;
+puntero++;
+*puntero = *puntero + 6;
+puntero = puntero + 3;
+puntero = puntero-puntero[-2];
+x = puntero - array;
+a) ¿Cuál es el valor de x?
+a. 1, 2, 3 ó 4?
+b) ¿Cual es el valor de array[1]?
+a. 2, 4, 6 ú 8?
+
+RTA: a) 1
+     b) 8
     
 */
 /*
@@ -713,84 +1045,17 @@ int main() {
 #include <stdlib.h>
 
 int main() {
+    int array[] = {1,2,3,4,5,6};
+    int *puntero, x;
+    puntero = array;
+    puntero++;
+    *puntero = *puntero + 6;
+    puntero = puntero + 3;
+    puntero = puntero-puntero[-2];
+    x = puntero - array;
+    printf("x = %d\n", x);
+    printf("array[1] = %d\n", array[1]);
     return 0;
 }
 */
 /*-------------------------------------------------------------------------------------------------------------------------------*/
-/*
-    14)
-    
-*/
-/*
-#include <stdio.h>
-#include <stdlib.h>
-
-int main() {
-    return 0;
-}
-*/
-/*-------------------------------------------------------------------------------------------------------------------------------*/
-/*
-    15)
-    
-*/
-/*
-#include <stdio.h>
-#include <stdlib.h>
-
-int main() {
-    return 0;
-}
-*/
-/*-------------------------------------------------------------------------------------------------------------------------------*/
-/*
-    16)
-    
-*/
-/*
-#include <stdio.h>
-#include <stdlib.h>
-
-int main() {
-    return 0;
-}
-*/
-/*-------------------------------------------------------------------------------------------------------------------------------*/
-/*
-    17)
-    
-*/
-/*
-#include <stdio.h>
-#include <stdlib.h>
-
-int main() {
-    return 0;
-}
-*/
-/*-------------------------------------------------------------------------------------------------------------------------------*/
-/*
-    18)
-    
-*/
-/*
-#include <stdio.h>
-#include <stdlib.h>
-
-int main() {
-    return 0;
-}
-*/
-/*-------------------------------------------------------------------------------------------------------------------------------*/
-
-
-
-
-
-
-
-
-
-
-
-
