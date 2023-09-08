@@ -322,13 +322,77 @@ int main() {
 
 /*-------------------------------------------------------------------------------------------------------------------------------*/
 /*
-    5)    
+    5) Dado un texto que finaliza en punto, se pide:
+a. La posición inicial de la palabra más larga,
+b. La longitud del texto,
+c. Cuantas palabras con una longitud entre 8 y 16 caracteres poseen más de tres veces la vocal “a”
+Nota: Las palabras pueden estar separadas por uno o más espacios en blanco. Puede haber varios espacios en blanco antes de la
+primera palabra y también después de la última. Se considera que una palabra finaliza cuando se encuentra un espacio en
+blanco o un signo de puntuación.
+
 */
 /*
 #include <stdio.h>
-#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+
+// Función para determinar si un carácter es una vocal 'a' o 'A'
+int esVocalA(char caracter) {
+    return tolower(caracter) == 'a';
+}
+
+// Función para contar las vocales 'a' en una palabra
+int contarVocalesAEnPalabra(const char *palabra) {
+    int contador = 0;
+    for (int i = 0; palabra[i] != '\0'; i++) {
+        if (esVocalA(palabra[i])) {
+            contador++;
+        }
+    }
+    return contador;
+}
 
 int main() {
+    char texto[100]; // Supongamos un límite de 100 caracteres para el texto
+    printf("Introduce un texto: ");
+    fgets(texto, sizeof(texto), stdin);
+
+    int posicionInicialPalabraMasLarga = 0;
+    int longitudTexto = strlen(texto);
+    int palabrasConVocalA = 0;
+    int contadorVocalA = 0;
+    int longitudPalabraActual = 0;
+    int longitudPalabraMasLarga = 0;
+
+    for (int i = 0; i <= longitudTexto; i++) {
+        char caracter = texto[i];
+        if (isalpha(caracter)) {
+            // Si es una letra, incrementamos la longitud de la palabra actual
+            longitudPalabraActual++;
+            if (esVocalA(caracter)) {
+                contadorVocalA++;
+            }
+        } else {
+            // Si no es una letra, hemos encontrado el final de una palabra
+            if (longitudPalabraActual > 0) {
+                if (longitudPalabraActual > longitudPalabraMasLarga) {
+                    // Actualizamos la posición inicial de la palabra más larga
+                    posicionInicialPalabraMasLarga = i - longitudPalabraActual;
+                    longitudPalabraMasLarga = longitudPalabraActual;
+                }
+                if (longitudPalabraActual >= 8 && longitudPalabraActual <= 16 && contadorVocalA > 3) {
+                    palabrasConVocalA++;
+                }
+                // Reiniciamos el contador de la vocal 'a' y la longitud de la palabra actual
+                contadorVocalA = 0;
+                longitudPalabraActual = 0;
+            }
+        }
+    }
+
+    printf("a. Posición inicial de la palabra más larga: %d\n", posicionInicialPalabraMasLarga);
+    printf("b. Longitud del texto: %d\n", longitudTexto);
+    printf("c. Palabras con longitud entre 8 y 16 caracteres y más de tres veces la vocal 'a': %d\n", palabrasConVocalA);
 
     return 0;
 }
