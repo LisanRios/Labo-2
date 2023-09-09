@@ -334,92 +334,154 @@ blanco o un signo de puntuación.
 /*
 #include <stdio.h>
 #include <string.h>
-#include <ctype.h>
-
-// Función para determinar si un carácter es una vocal 'a' o 'A'
-int esVocalA(char caracter) {
-    return tolower(caracter) == 'a';
-}
 
 // Función para contar las vocales 'a' en una palabra
 int contarVocalesAEnPalabra(const char *palabra) {
     int contador = 0;
     for (int i = 0; palabra[i] != '\0'; i++) {
-        if (esVocalA(palabra[i])) {
+        if (palabra[i] == 'a' || palabra[i] == 'A') {
             contador++;
         }
     }
     return contador;
 }
 
-int main() {
-    char texto[100]; // Supongamos un límite de 100 caracteres para el texto
-    printf("Introduce un texto: ");
-    fgets(texto, sizeof(texto), stdin);
-
-    int posicionInicialPalabraMasLarga = 0;
+void analizarTexto(const char *texto) {
     int longitudTexto = strlen(texto);
-    int palabrasConVocalA = 0;
-    int contadorVocalA = 0;
-    int longitudPalabraActual = 0;
-    int longitudPalabraMasLarga = 0;
+    printf("b. Longitud del texto: %d\n", longitudTexto);
 
-    for (int i = 0; i <= longitudTexto; i++) {
-        char caracter = texto[i];
-        if (isalpha(caracter)) {
-            // Si es una letra, incrementamos la longitud de la palabra actual
-            longitudPalabraActual++;
-            if (esVocalA(caracter)) {
-                contadorVocalA++;
-            }
-        } else {
-            // Si no es una letra, hemos encontrado el final de una palabra
-            if (longitudPalabraActual > 0) {
-                if (longitudPalabraActual > longitudPalabraMasLarga) {
-                    // Actualizamos la posición inicial de la palabra más larga
-                    posicionInicialPalabraMasLarga = i - longitudPalabraActual;
-                    longitudPalabraMasLarga = longitudPalabraActual;
-                }
-                if (longitudPalabraActual >= 8 && longitudPalabraActual <= 16 && contadorVocalA > 3) {
-                    palabrasConVocalA++;
-                }
-                // Reiniciamos el contador de la vocal 'a' y la longitud de la palabra actual
-                contadorVocalA = 0;
-                longitudPalabraActual = 0;
+    int posicionInicial = 0;
+    int posicionActual = 0;
+    int longitudPalabraMasLarga = 0;
+    int contadorPalabras8a16 = 0;
+
+    while (texto[posicionActual] != '\0') {
+        // Encontrar el inicio de una palabra
+        while (texto[posicionActual] != '\0' && (texto[posicionActual] == ' ' || texto[posicionActual] == '.')) {
+            posicionActual++;
+        }
+
+        // Contar caracteres de la palabra actual
+        int longitudPalabra = 0;
+        while (texto[posicionActual] != '\0' && texto[posicionActual] != ' ' && texto[posicionActual] != '.') {
+            longitudPalabra++;
+            posicionActual++;
+        }
+
+        // Verificar si es la palabra más larga hasta ahora
+        if (longitudPalabra > longitudPalabraMasLarga) {
+            longitudPalabraMasLarga = longitudPalabra;
+            posicionInicial = posicionActual - longitudPalabra;
+        }
+
+        // Verificar si la palabra cumple con las condiciones
+        if (longitudPalabra >= 8 && longitudPalabra <= 16) {
+            int vocalesA = contarVocalesAEnPalabra(&texto[posicionActual - longitudPalabra]);
+            if (vocalesA > 3) {
+                contadorPalabras8a16++;
             }
         }
     }
 
-    printf("a. Posición inicial de la palabra más larga: %d\n", posicionInicialPalabraMasLarga);
-    printf("b. Longitud del texto: %d\n", longitudTexto);
-    printf("c. Palabras con longitud entre 8 y 16 caracteres y más de tres veces la vocal 'a': %d\n", palabrasConVocalA);
+    printf("a. Posición inicial de la palabra más larga: %d\n", posicionInicial);
+    printf("c. Palabras con longitud entre 8 y 16 caracteres y más de tres veces la vocal 'a': %d\n", contadorPalabras8a16);
+}
+
+int main() {
+    char texto[100];
+    printf("Introduce un texto: ");
+    fgets(texto, sizeof(texto), stdin);
+
+    // Eliminar el salto de línea final
+    texto[strlen(texto) - 1] = '\0';
+
+    analizarTexto(texto);
 
     return 0;
 }
 */
+
 /*-------------------------------------------------------------------------------------------------------------------------------*/
 /*
-    6)    
+    6)Escribe una función inversa que recibe una cadena como parámetro y devuelve los caracteres de la
+misma en orden inverso.
 */
 /*
 #include <stdio.h>
 #include <stdlib.h>
 
-int main() {
+void inversa(char v[]) {
+    int i = 0;
+    int j = strlen(v) - 1;
+    while (i < j) {
+        char aux = v[i];
+        v[i] = v[j];
+        v[j] = aux;
+        i++;
+        j--;
+    }
+    printf("inversa: %s\n", v);
+}
 
+int main() {
+    char v[100];
+    printf("Ingrese un texto: ");
+    fgets(v, sizeof(v), stdin);
+    inversa(v);
     return 0;
 }
 */
 /*-------------------------------------------------------------------------------------------------------------------------------*/
 /*
-    7)    
+    7) Escribe un programa que lea una frase y a continuación visualice cada palabra de la frase en columna, seguido
+del número de letras que componen cada palabra. La frase termina con un punto (.)
+Ejemplo: Frase: La casa es linda.
+Solución:
+La 2
+casa 4
+es 2
+linda 5
 */
 /*
 #include <stdio.h>
 #include <stdlib.h>
 
-int main() {
+int contar_palabras(char v[]) {
+    int i = 0;
+    int cont = 0;
+    while (v[i] != '\0') {
+        if (v[i] == ' ') {
+            cont++;
+        }
+        i++;
+    }
+    return cont+1;
+}
 
+colunacion(char v[], int num_palabras) {
+    int i = 0, j = 0;
+    while (v[i] != '\0') {
+        if (v[i] != ' ') {
+            printf("%c", v[i]);
+            j++;
+        }
+        if (v[i] == ' ')
+        {
+            printf(" %d\n", j);
+            j = 0;
+        }
+        i++;
+    }
+    printf(" %d", j);
+}
+
+int main() {
+    char v[100];
+    printf("Ingrese una frase: ");
+    fgets(v, sizeof(v), stdin);
+    printf("La frase es: %s\n", v);
+    int num_palabras = contar_palabras(v);
+    colunacion(v, num_palabras);
     return 0;
 }
 */

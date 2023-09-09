@@ -640,22 +640,20 @@ void emite_vector(int v[], int tam) {
 
 void diferencia_vectores(int v1[], int v2[], int v3[], int tam) {
     int i = 0;
-    while (i < tam)
-    {
-        if (v1[i] != v2[i]){
+    while (i < tam) {
+        if (v1[i] != v2[i]) {
             v3[i] = v1[i];
         } else {
             v3[i] = 0;
-        } 
+        }
         i++;
     }
 }
 
 void interseccion_vectores(int v1[], int v2[], int v3[], int tam) {
     int i = 0;
-    while (i < tam)
-    {
-        if (v1[i] == v2[i]){
+    while (i < tam) {
+        if (v1[i] == v2[i]) {
             v3[i] = v1[i];
         } else {
             v3[i] = 0;
@@ -665,31 +663,45 @@ void interseccion_vectores(int v1[], int v2[], int v3[], int tam) {
 }
 
 int main() {
-    int v1[5], v2[5], v3[10];
-    carga_vector(v1, 5);
-    carga_vector(v2, 5);
-    emite_vector(v1, 5);
-    emite_vector(v2, 5);   
+    int tam1, tam2;
+    printf("Ingrese el tamaño del primer vector: ");
+    scanf("%d", &tam1);
+    printf("Ingrese el tamaño del segundo vector: ");
+    scanf("%d", &tam2);
+
+    int v1[tam1], v2[tam2];
+    carga_vector(v1, tam1);
+    carga_vector(v2, tam2);
+    emite_vector(v1, tam1);
+    emite_vector(v2, tam2);
+   
+    int tam3 = tam1 + tam2;
+    int v3[tam3];
+    
     printf("*******************\n"); 
     printf("Unión\n");
-    for (int i = 0; i < 5; i++) {
+    int i = 0;
+    while(i < tam1) {
         v3[i] = v1[i];
+        i++;
     }
-    
-    for (int i = 0; i < 5; i++) {
-        v3[i + 5] = v2[i];
+    i = 0;
+    while(i < tam2) {
+        v3[i + tam1] = v2[i];
+        i++;
     }
-
-    emite_vector(v3, 10);
+    emite_vector(v3, tam3);
     printf("Diferencia\n");
-    diferencia_vectores(v1, v2, v3, 10);
-    emite_vector(v3, 10);
+    diferencia_vectores(v1, v2, v3, tam3);
+    emite_vector(v3, tam3);
     printf("Intersección\n");
-    interseccion_vectores(v1, v2, v3, 10);
-    emite_vector(v3, 10);
+    interseccion_vectores(v1, v2, v3, tam3);
+    emite_vector(v3, tam3);
+    
     return 0;
 }
 */
+
 /*-------------------------------------------------------------------------------------------------------------------------------*/
 /*
     12)Para probar un congelador, la fábrica registra en un listado, la temperatura en el interior durante todos los días del
