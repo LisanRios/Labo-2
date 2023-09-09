@@ -446,33 +446,18 @@ linda 5
 #include <stdio.h>
 #include <stdlib.h>
 
-int contar_palabras(char v[]) {
-    int i = 0;
-    int cont = 0;
-    while (v[i] != '\0') {
-        if (v[i] == ' ') {
-            cont++;
-        }
-        i++;
-    }
-    return cont+1;
-}
-
-colunacion(char v[], int num_palabras) {
+void colunacion(char v[]) {
     int i = 0, j = 0;
-    while (v[i] != '\0') {
-        if (v[i] != ' ') {
-            printf("%c", v[i]);
-            j++;
-        }
-        if (v[i] == ' ')
-        {
-            printf(" %d\n", j);
-            j = 0;
-        }
-        i++;
+    while(v[i] != '\0'){
+    if(v[i] != ' ' && v[i] != '.'){
+        printf("%c", v[i]);
+        j += 1;
+    } else {
+        printf(" %d\n", j);
+        j = 0;
     }
-    printf(" %d", j);
+    i++;
+}
 }
 
 int main() {
@@ -480,8 +465,7 @@ int main() {
     printf("Ingrese una frase: ");
     fgets(v, sizeof(v), stdin);
     printf("La frase es: %s\n", v);
-    int num_palabras = contar_palabras(v);
-    colunacion(v, num_palabras);
+    colunacion(v);
     return 0;
 }
 */
