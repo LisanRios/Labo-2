@@ -407,9 +407,6 @@ double *max(double *v, int tam) {
     return p; 
 }
 
-#include <stdio.h>
-#include <stdlib.h>
-
 int main() {
     int dim;
     printf("Ingrese la dimensión del vector: ");
