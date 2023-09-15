@@ -18,10 +18,11 @@ minúsculas o mayúsculas indistintamente, horas trabajadas (> a 0 y <=50) y sue
 errores (ver ejemplo control de errores con cadenas.c). Las búsquedas por nombre y/o apellido deben considerar que el usuario
 puede ingresar esos datos en minúsculas por lo tanto hay que convertir la cadena antes de realizar el proceso.
 */
-
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+
+// Estructura para representar a un empleado
 struct Empleado {
     char nombre[50];
     char sexo;
@@ -30,7 +31,7 @@ struct Empleado {
 };
 
 // Función para convertir una cadena a mayúsculas
-void convertirAMayusculas(char *cadena) {
+void convertirAMayuscula(char *cadena) {
     for (int i = 0; cadena[i] != '\0'; i++) {
         cadena[i] = toupper(cadena[i]);
     }
@@ -42,18 +43,14 @@ float calcularSueldo(struct Empleado empleado) {
 }
 
 int main() {
-    const int num_empleados = 3;
+    const int num_empleados = 8;  // Cambiar el número de empleados
     struct Empleado empleados[num_empleados];
     char buscar_nombre[50];
-    char buscar_apellido[50];
     int opcion;
 
     // Inicialización de variables para el total de pagos y promedios por sexo
-    float total_pago_hombres = 0, total_pago_mujeres = 0;
+    float total_pago_hombres = 0, total_pago_mujeres = 0, sueldo_promedio_hombres = 0, sueldo_promedio_mujeres = 0;
     int num_hombres = 0, num_mujeres = 0;
-
-    // Inicialización de variables para el sueldo promedio
-    float sueldo_promedio_hombres = 0, sueldo_promedio_mujeres = 0;
 
     // Inicialización de la base de sueldo por hora
     float sueldo_base = 250.50;
@@ -76,6 +73,7 @@ int main() {
                 for (int i = 0; i < num_empleados; i++) {
                     printf("\nIngrese el nombre y apellido del empleado: ");
                     scanf(" %[^\n]", empleados[i].nombre);
+                    convertirAMayuscula(empleados[i].nombre);  // Convertir a mayúsculas
                     printf("Ingrese el sexo (H/M): ");
                     scanf(" %c", &empleados[i].sexo);
                     empleados[i].sexo = toupper(empleados[i].sexo);
@@ -131,7 +129,6 @@ int main() {
                 // Buscar empleado por nombre o apellido
                 printf("\nIngrese el nombre o apellido a buscar: ");
                 scanf(" %[^\n]", buscar_nombre);
-                convertirAMayusculas(buscar_nombre);
 
                 int encontrado = 0;
                 printf("\nResultados de la búsqueda:\n");
@@ -139,7 +136,7 @@ int main() {
                     // Convertir el nombre del empleado a mayúsculas para la comparación
                     char nombre_empleado_upper[50];
                     strcpy(nombre_empleado_upper, empleados[i].nombre);
-                    convertirAMayusculas(nombre_empleado_upper);
+                    convertirAMayuscula(nombre_empleado_upper);
 
                     // Verificar si el nombre o apellido coincide
                     if (strstr(nombre_empleado_upper, buscar_nombre) != NULL) {
@@ -166,6 +163,7 @@ int main() {
 
     return 0;
 }
+
 
 
 
